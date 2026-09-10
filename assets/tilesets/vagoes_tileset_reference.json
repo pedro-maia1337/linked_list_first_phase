@@ -1,0 +1,1359 @@
+{
+  "name": "vagoes-lista-encadeada",
+  "image": "vagoes-lista-encadeada.png",
+  "size": {
+    "width": 1254,
+    "height": 1254
+  },
+  "coordinate_system": "top-left origin, pixels",
+  "notes": [
+    "Retângulos correspondem aos quadros visíveis do atlas.",
+    "Os nomes são semânticos e servem como referência para entidades/componentes no Flame.",
+    "O painel inferior (y=926..1220) é uma composição de demonstração e não deve ser tratado como tiles individuais.",
+    "Alguns quadros têm margem/borda de 1–3 px; ajuste o padding no SpriteSheet se necessário."
+  ],
+  "categories": [
+    {
+      "id": "cart_body",
+      "name": "Corpos de vagão",
+      "source_region": {
+        "y": 27,
+        "height": 77
+      },
+      "items": [
+        {
+          "index": 1,
+          "id": "cart_body_01",
+          "name": "vagao_padrao",
+          "rect": {
+            "x": 23,
+            "y": 27,
+            "w": 112,
+            "h": 77
+          }
+        },
+        {
+          "index": 2,
+          "id": "cart_body_02",
+          "name": "vagao_liso",
+          "rect": {
+            "x": 143,
+            "y": 27,
+            "w": 105,
+            "h": 77
+          }
+        },
+        {
+          "index": 3,
+          "id": "cart_body_03",
+          "name": "vagao_pedra",
+          "rect": {
+            "x": 257,
+            "y": 27,
+            "w": 108,
+            "h": 77
+          }
+        },
+        {
+          "index": 4,
+          "id": "cart_body_04",
+          "name": "vagao_aberto_esquerda",
+          "rect": {
+            "x": 375,
+            "y": 27,
+            "w": 104,
+            "h": 77
+          }
+        },
+        {
+          "index": 5,
+          "id": "cart_body_05",
+          "name": "vagao_aberto_direita",
+          "rect": {
+            "x": 488,
+            "y": 27,
+            "w": 102,
+            "h": 77
+          }
+        },
+        {
+          "index": 6,
+          "id": "cart_body_06",
+          "name": "vagao_listra_01",
+          "rect": {
+            "x": 599,
+            "y": 27,
+            "w": 104,
+            "h": 77
+          }
+        },
+        {
+          "index": 7,
+          "id": "cart_body_07",
+          "name": "vagao_listra_02",
+          "rect": {
+            "x": 711,
+            "y": 27,
+            "w": 105,
+            "h": 77
+          }
+        },
+        {
+          "index": 8,
+          "id": "cart_body_08",
+          "name": "estrutura_vagao_01",
+          "rect": {
+            "x": 825,
+            "y": 27,
+            "w": 107,
+            "h": 77
+          }
+        },
+        {
+          "index": 9,
+          "id": "cart_body_09",
+          "name": "estrutura_vagao_02",
+          "rect": {
+            "x": 941,
+            "y": 27,
+            "w": 100,
+            "h": 77
+          }
+        },
+        {
+          "index": 10,
+          "id": "cart_body_10",
+          "name": "estrutura_vagao_03",
+          "rect": {
+            "x": 1049,
+            "y": 27,
+            "w": 79,
+            "h": 77
+          }
+        },
+        {
+          "index": 11,
+          "id": "cart_body_11",
+          "name": "placa_listrada",
+          "rect": {
+            "x": 1137,
+            "y": 27,
+            "w": 88,
+            "h": 77
+          }
+        }
+      ]
+    },
+    {
+      "id": "cart_full",
+      "name": "Vagões e componentes",
+      "source_region": {
+        "y": 117,
+        "height": 96
+      },
+      "items": [
+        {
+          "index": 1,
+          "id": "cart_full_01",
+          "name": "vagao_rodas_01",
+          "rect": {
+            "x": 23,
+            "y": 117,
+            "w": 110,
+            "h": 96
+          }
+        },
+        {
+          "index": 2,
+          "id": "cart_full_02",
+          "name": "vagao_rodas_02",
+          "rect": {
+            "x": 143,
+            "y": 117,
+            "w": 103,
+            "h": 96
+          }
+        },
+        {
+          "index": 3,
+          "id": "cart_full_03",
+          "name": "vagao_rodas_03",
+          "rect": {
+            "x": 257,
+            "y": 117,
+            "w": 106,
+            "h": 96
+          }
+        },
+        {
+          "index": 4,
+          "id": "cart_full_04",
+          "name": "vagao_corrente_01",
+          "rect": {
+            "x": 376,
+            "y": 117,
+            "w": 103,
+            "h": 96
+          }
+        },
+        {
+          "index": 5,
+          "id": "cart_full_05",
+          "name": "vagao_corrente_02",
+          "rect": {
+            "x": 490,
+            "y": 117,
+            "w": 101,
+            "h": 96
+          }
+        },
+        {
+          "index": 6,
+          "id": "cart_full_06",
+          "name": "vagao_rodas_04",
+          "rect": {
+            "x": 601,
+            "y": 117,
+            "w": 102,
+            "h": 96
+          }
+        },
+        {
+          "index": 7,
+          "id": "cart_full_07",
+          "name": "vagao_rodas_05",
+          "rect": {
+            "x": 714,
+            "y": 117,
+            "w": 102,
+            "h": 96
+          }
+        },
+        {
+          "index": 8,
+          "id": "cart_full_08",
+          "name": "vagao_rodas_06",
+          "rect": {
+            "x": 829,
+            "y": 117,
+            "w": 103,
+            "h": 96
+          }
+        },
+        {
+          "index": 9,
+          "id": "cart_full_09",
+          "name": "fragmento_metal_01",
+          "rect": {
+            "x": 945,
+            "y": 117,
+            "w": 96,
+            "h": 96
+          }
+        },
+        {
+          "index": 10,
+          "id": "cart_full_10",
+          "name": "fragmento_metal_02",
+          "rect": {
+            "x": 1049,
+            "y": 117,
+            "w": 79,
+            "h": 96
+          }
+        },
+        {
+          "index": 11,
+          "id": "cart_full_11",
+          "name": "fragmento_metal_03",
+          "rect": {
+            "x": 1137,
+            "y": 117,
+            "w": 90,
+            "h": 96
+          }
+        }
+      ]
+    },
+    {
+      "id": "chains_hooks",
+      "name": "Correntes e ganchos",
+      "source_region": {
+        "y": 224,
+        "height": 74
+      },
+      "items": [
+        {
+          "index": 1,
+          "id": "chains_hooks_01",
+          "name": "corrente_01",
+          "rect": {
+            "x": 23,
+            "y": 224,
+            "w": 110,
+            "h": 74
+          }
+        },
+        {
+          "index": 2,
+          "id": "chains_hooks_02",
+          "name": "corrente_02",
+          "rect": {
+            "x": 142,
+            "y": 224,
+            "w": 104,
+            "h": 74
+          }
+        },
+        {
+          "index": 3,
+          "id": "chains_hooks_03",
+          "name": "corrente_03",
+          "rect": {
+            "x": 257,
+            "y": 224,
+            "w": 106,
+            "h": 74
+          }
+        },
+        {
+          "index": 4,
+          "id": "chains_hooks_04",
+          "name": "corrente_04",
+          "rect": {
+            "x": 375,
+            "y": 224,
+            "w": 104,
+            "h": 74
+          }
+        },
+        {
+          "index": 5,
+          "id": "chains_hooks_05",
+          "name": "corrente_05",
+          "rect": {
+            "x": 489,
+            "y": 224,
+            "w": 101,
+            "h": 74
+          }
+        },
+        {
+          "index": 6,
+          "id": "chains_hooks_06",
+          "name": "corrente_06",
+          "rect": {
+            "x": 600,
+            "y": 224,
+            "w": 104,
+            "h": 74
+          }
+        },
+        {
+          "index": 7,
+          "id": "chains_hooks_07",
+          "name": "gancho_01",
+          "rect": {
+            "x": 713,
+            "y": 224,
+            "w": 75,
+            "h": 74
+          }
+        },
+        {
+          "index": 8,
+          "id": "chains_hooks_08",
+          "name": "gancho_02",
+          "rect": {
+            "x": 798,
+            "y": 224,
+            "w": 80,
+            "h": 74
+          }
+        },
+        {
+          "index": 9,
+          "id": "chains_hooks_09",
+          "name": "gancho_03",
+          "rect": {
+            "x": 886,
+            "y": 224,
+            "w": 92,
+            "h": 74
+          }
+        },
+        {
+          "index": 10,
+          "id": "chains_hooks_10",
+          "name": "gancho_04",
+          "rect": {
+            "x": 990,
+            "y": 224,
+            "w": 70,
+            "h": 74
+          }
+        },
+        {
+          "index": 11,
+          "id": "chains_hooks_11",
+          "name": "corrente_curta",
+          "rect": {
+            "x": 1072,
+            "y": 224,
+            "w": 98,
+            "h": 74
+          }
+        },
+        {
+          "index": 12,
+          "id": "chains_hooks_12",
+          "name": "corrente_vertical",
+          "rect": {
+            "x": 1181,
+            "y": 224,
+            "w": 47,
+            "h": 74
+          }
+        }
+      ]
+    },
+    {
+      "id": "anchors_lava",
+      "name": "Âncoras, ganchos e lava",
+      "source_region": {
+        "y": 305,
+        "height": 101
+      },
+      "items": [
+        {
+          "index": 1,
+          "id": "anchors_lava_01",
+          "name": "ancora_01",
+          "rect": {
+            "x": 23,
+            "y": 305,
+            "w": 61,
+            "h": 101
+          }
+        },
+        {
+          "index": 2,
+          "id": "anchors_lava_02",
+          "name": "ancora_02",
+          "rect": {
+            "x": 94,
+            "y": 305,
+            "w": 69,
+            "h": 101
+          }
+        },
+        {
+          "index": 3,
+          "id": "anchors_lava_03",
+          "name": "ancora_03",
+          "rect": {
+            "x": 173,
+            "y": 305,
+            "w": 73,
+            "h": 101
+          }
+        },
+        {
+          "index": 4,
+          "id": "anchors_lava_04",
+          "name": "ancora_04",
+          "rect": {
+            "x": 257,
+            "y": 305,
+            "w": 93,
+            "h": 101
+          }
+        },
+        {
+          "index": 5,
+          "id": "anchors_lava_05",
+          "name": "ancora_05",
+          "rect": {
+            "x": 359,
+            "y": 305,
+            "w": 84,
+            "h": 101
+          }
+        },
+        {
+          "index": 6,
+          "id": "anchors_lava_06",
+          "name": "ancora_06",
+          "rect": {
+            "x": 452,
+            "y": 305,
+            "w": 79,
+            "h": 101
+          }
+        },
+        {
+          "index": 7,
+          "id": "anchors_lava_07",
+          "name": "ancora_07",
+          "rect": {
+            "x": 541,
+            "y": 305,
+            "w": 79,
+            "h": 101
+          }
+        },
+        {
+          "index": 8,
+          "id": "anchors_lava_08",
+          "name": "ancora_08",
+          "rect": {
+            "x": 628,
+            "y": 305,
+            "w": 74,
+            "h": 101
+          }
+        },
+        {
+          "index": 9,
+          "id": "anchors_lava_09",
+          "name": "gancho_circular_01",
+          "rect": {
+            "x": 710,
+            "y": 305,
+            "w": 78,
+            "h": 101
+          }
+        },
+        {
+          "index": 10,
+          "id": "anchors_lava_10",
+          "name": "gancho_circular_02",
+          "rect": {
+            "x": 798,
+            "y": 305,
+            "w": 78,
+            "h": 101
+          }
+        },
+        {
+          "index": 11,
+          "id": "anchors_lava_11",
+          "name": "rocha_lava_01",
+          "rect": {
+            "x": 886,
+            "y": 305,
+            "w": 74,
+            "h": 101
+          }
+        },
+        {
+          "index": 12,
+          "id": "anchors_lava_12",
+          "name": "rocha_lava_02",
+          "rect": {
+            "x": 971,
+            "y": 305,
+            "w": 82,
+            "h": 101
+          }
+        },
+        {
+          "index": 13,
+          "id": "anchors_lava_13",
+          "name": "rocha_lava_03",
+          "rect": {
+            "x": 1063,
+            "y": 305,
+            "w": 81,
+            "h": 101
+          }
+        },
+        {
+          "index": 14,
+          "id": "anchors_lava_14",
+          "name": "rocha_lava_04",
+          "rect": {
+            "x": 1154,
+            "y": 305,
+            "w": 73,
+            "h": 101
+          }
+        }
+      ]
+    },
+    {
+      "id": "cave_walls",
+      "name": "Paredes e bordas de caverna",
+      "source_region": {
+        "y": 415,
+        "height": 107
+      },
+      "items": [
+        {
+          "index": 1,
+          "id": "cave_walls_01",
+          "name": "parede_canto_01",
+          "rect": {
+            "x": 23,
+            "y": 415,
+            "w": 127,
+            "h": 107
+          }
+        },
+        {
+          "index": 2,
+          "id": "cave_walls_02",
+          "name": "parede_lava_01",
+          "rect": {
+            "x": 160,
+            "y": 415,
+            "w": 86,
+            "h": 107
+          }
+        },
+        {
+          "index": 3,
+          "id": "cave_walls_03",
+          "name": "parede_canto_02",
+          "rect": {
+            "x": 257,
+            "y": 415,
+            "w": 103,
+            "h": 107
+          }
+        },
+        {
+          "index": 4,
+          "id": "cave_walls_04",
+          "name": "parede_lava_diagonal",
+          "rect": {
+            "x": 370,
+            "y": 415,
+            "w": 83,
+            "h": 107
+          }
+        },
+        {
+          "index": 5,
+          "id": "cave_walls_05",
+          "name": "parede_lava_borda",
+          "rect": {
+            "x": 462,
+            "y": 415,
+            "w": 80,
+            "h": 107
+          }
+        },
+        {
+          "index": 6,
+          "id": "cave_walls_06",
+          "name": "parede_caverna_01",
+          "rect": {
+            "x": 552,
+            "y": 415,
+            "w": 92,
+            "h": 107
+          }
+        },
+        {
+          "index": 7,
+          "id": "cave_walls_07",
+          "name": "parede_caverna_02",
+          "rect": {
+            "x": 655,
+            "y": 415,
+            "w": 124,
+            "h": 107
+          }
+        },
+        {
+          "index": 8,
+          "id": "cave_walls_08",
+          "name": "estalactite_cluster_01",
+          "rect": {
+            "x": 789,
+            "y": 415,
+            "w": 126,
+            "h": 107
+          }
+        },
+        {
+          "index": 9,
+          "id": "cave_walls_09",
+          "name": "estalactite_01",
+          "rect": {
+            "x": 926,
+            "y": 415,
+            "w": 78,
+            "h": 107
+          }
+        },
+        {
+          "index": 10,
+          "id": "cave_walls_10",
+          "name": "estalactite_02",
+          "rect": {
+            "x": 1014,
+            "y": 415,
+            "w": 39,
+            "h": 107
+          }
+        },
+        {
+          "index": 11,
+          "id": "cave_walls_11",
+          "name": "estalactite_03",
+          "rect": {
+            "x": 1063,
+            "y": 415,
+            "w": 81,
+            "h": 107
+          }
+        },
+        {
+          "index": 12,
+          "id": "cave_walls_12",
+          "name": "estalactite_04",
+          "rect": {
+            "x": 1154,
+            "y": 415,
+            "w": 73,
+            "h": 107
+          }
+        }
+      ]
+    },
+    {
+      "id": "architecture",
+      "name": "Arquitetura da mina",
+      "source_region": {
+        "y": 530,
+        "height": 104
+      },
+      "items": [
+        {
+          "index": 1,
+          "id": "architecture_01",
+          "name": "arco_01",
+          "rect": {
+            "x": 23,
+            "y": 530,
+            "w": 144,
+            "h": 104
+          }
+        },
+        {
+          "index": 2,
+          "id": "architecture_02",
+          "name": "coluna_lava_01",
+          "rect": {
+            "x": 178,
+            "y": 530,
+            "w": 54,
+            "h": 104
+          }
+        },
+        {
+          "index": 3,
+          "id": "architecture_03",
+          "name": "parede_arquitetura_01",
+          "rect": {
+            "x": 241,
+            "y": 530,
+            "w": 119,
+            "h": 104
+          }
+        },
+        {
+          "index": 4,
+          "id": "architecture_04",
+          "name": "coluna_lava_02",
+          "rect": {
+            "x": 370,
+            "y": 530,
+            "w": 83,
+            "h": 104
+          }
+        },
+        {
+          "index": 5,
+          "id": "architecture_05",
+          "name": "torre_01",
+          "rect": {
+            "x": 462,
+            "y": 530,
+            "w": 80,
+            "h": 104
+          }
+        },
+        {
+          "index": 6,
+          "id": "architecture_06",
+          "name": "torre_02",
+          "rect": {
+            "x": 552,
+            "y": 530,
+            "w": 92,
+            "h": 104
+          }
+        },
+        {
+          "index": 7,
+          "id": "architecture_07",
+          "name": "coluna_lava_03",
+          "rect": {
+            "x": 655,
+            "y": 530,
+            "w": 124,
+            "h": 104
+          }
+        },
+        {
+          "index": 8,
+          "id": "architecture_08",
+          "name": "ponte_01",
+          "rect": {
+            "x": 789,
+            "y": 530,
+            "w": 126,
+            "h": 104
+          }
+        },
+        {
+          "index": 9,
+          "id": "architecture_09",
+          "name": "ponte_02",
+          "rect": {
+            "x": 926,
+            "y": 530,
+            "w": 78,
+            "h": 104
+          }
+        },
+        {
+          "index": 10,
+          "id": "architecture_10",
+          "name": "arco_02",
+          "rect": {
+            "x": 1014,
+            "y": 530,
+            "w": 39,
+            "h": 104
+          }
+        },
+        {
+          "index": 11,
+          "id": "architecture_11",
+          "name": "torre_03",
+          "rect": {
+            "x": 1063,
+            "y": 530,
+            "w": 81,
+            "h": 104
+          }
+        },
+        {
+          "index": 12,
+          "id": "architecture_12",
+          "name": "arco_03",
+          "rect": {
+            "x": 1154,
+            "y": 530,
+            "w": 73,
+            "h": 104
+          }
+        }
+      ]
+    },
+    {
+      "id": "platforms",
+      "name": "Plataformas e bordas de lava",
+      "source_region": {
+        "y": 645,
+        "height": 80
+      },
+      "items": [
+        {
+          "index": 1,
+          "id": "platforms_01",
+          "name": "plataforma_listrada_01",
+          "rect": {
+            "x": 23,
+            "y": 645,
+            "w": 84,
+            "h": 80
+          }
+        },
+        {
+          "index": 2,
+          "id": "platforms_02",
+          "name": "plataforma_listrada_02",
+          "rect": {
+            "x": 117,
+            "y": 645,
+            "w": 82,
+            "h": 80
+          }
+        },
+        {
+          "index": 3,
+          "id": "platforms_03",
+          "name": "plataforma_listrada_03",
+          "rect": {
+            "x": 210,
+            "y": 645,
+            "w": 102,
+            "h": 80
+          }
+        },
+        {
+          "index": 4,
+          "id": "platforms_04",
+          "name": "plataforma_listrada_04",
+          "rect": {
+            "x": 323,
+            "y": 645,
+            "w": 97,
+            "h": 80
+          }
+        },
+        {
+          "index": 5,
+          "id": "platforms_05",
+          "name": "plataforma_listrada_05",
+          "rect": {
+            "x": 430,
+            "y": 645,
+            "w": 83,
+            "h": 80
+          }
+        },
+        {
+          "index": 6,
+          "id": "platforms_06",
+          "name": "borda_lava_01",
+          "rect": {
+            "x": 527,
+            "y": 645,
+            "w": 65,
+            "h": 80
+          }
+        },
+        {
+          "index": 7,
+          "id": "platforms_07",
+          "name": "borda_lava_02",
+          "rect": {
+            "x": 602,
+            "y": 645,
+            "w": 67,
+            "h": 80
+          }
+        },
+        {
+          "index": 8,
+          "id": "platforms_08",
+          "name": "borda_lava_03",
+          "rect": {
+            "x": 679,
+            "y": 645,
+            "w": 69,
+            "h": 80
+          }
+        },
+        {
+          "index": 9,
+          "id": "platforms_09",
+          "name": "borda_lava_04",
+          "rect": {
+            "x": 758,
+            "y": 645,
+            "w": 95,
+            "h": 80
+          }
+        },
+        {
+          "index": 10,
+          "id": "platforms_10",
+          "name": "borda_lava_05",
+          "rect": {
+            "x": 863,
+            "y": 645,
+            "w": 75,
+            "h": 80
+          }
+        },
+        {
+          "index": 11,
+          "id": "platforms_11",
+          "name": "borda_lava_06",
+          "rect": {
+            "x": 949,
+            "y": 645,
+            "w": 73,
+            "h": 80
+          }
+        },
+        {
+          "index": 12,
+          "id": "platforms_12",
+          "name": "borda_lava_07",
+          "rect": {
+            "x": 1031,
+            "y": 645,
+            "w": 71,
+            "h": 80
+          }
+        },
+        {
+          "index": 13,
+          "id": "platforms_13",
+          "name": "borda_lava_08",
+          "rect": {
+            "x": 1109,
+            "y": 645,
+            "w": 119,
+            "h": 80
+          }
+        }
+      ]
+    },
+    {
+      "id": "rocks",
+      "name": "Rochas e terreno",
+      "source_region": {
+        "y": 734,
+        "height": 73
+      },
+      "items": [
+        {
+          "index": 1,
+          "id": "rocks_01",
+          "name": "pedras_01",
+          "rect": {
+            "x": 23,
+            "y": 734,
+            "w": 103,
+            "h": 73
+          }
+        },
+        {
+          "index": 2,
+          "id": "rocks_02",
+          "name": "pedras_02",
+          "rect": {
+            "x": 136,
+            "y": 734,
+            "w": 76,
+            "h": 73
+          }
+        },
+        {
+          "index": 3,
+          "id": "rocks_03",
+          "name": "pedras_03",
+          "rect": {
+            "x": 223,
+            "y": 734,
+            "w": 76,
+            "h": 73
+          }
+        },
+        {
+          "index": 4,
+          "id": "rocks_04",
+          "name": "parede_rochosa_01",
+          "rect": {
+            "x": 309,
+            "y": 734,
+            "w": 80,
+            "h": 73
+          }
+        },
+        {
+          "index": 5,
+          "id": "rocks_05",
+          "name": "pedras_04",
+          "rect": {
+            "x": 399,
+            "y": 734,
+            "w": 78,
+            "h": 73
+          }
+        },
+        {
+          "index": 6,
+          "id": "rocks_06",
+          "name": "rocha_pico_01",
+          "rect": {
+            "x": 488,
+            "y": 734,
+            "w": 110,
+            "h": 73
+          }
+        },
+        {
+          "index": 7,
+          "id": "rocks_07",
+          "name": "rocha_inclinada_01",
+          "rect": {
+            "x": 608,
+            "y": 734,
+            "w": 98,
+            "h": 73
+          }
+        },
+        {
+          "index": 8,
+          "id": "rocks_08",
+          "name": "rocha_buraco_01",
+          "rect": {
+            "x": 717,
+            "y": 734,
+            "w": 64,
+            "h": 73
+          }
+        },
+        {
+          "index": 9,
+          "id": "rocks_09",
+          "name": "rocha_parede_01",
+          "rect": {
+            "x": 791,
+            "y": 734,
+            "w": 61,
+            "h": 73
+          }
+        },
+        {
+          "index": 10,
+          "id": "rocks_10",
+          "name": "estalactite_ponta_01",
+          "rect": {
+            "x": 863,
+            "y": 734,
+            "w": 65,
+            "h": 73
+          }
+        },
+        {
+          "index": 11,
+          "id": "rocks_11",
+          "name": "estalactite_ponta_02",
+          "rect": {
+            "x": 938,
+            "y": 734,
+            "w": 62,
+            "h": 73
+          }
+        },
+        {
+          "index": 12,
+          "id": "rocks_12",
+          "name": "estalactite_ponta_03",
+          "rect": {
+            "x": 1010,
+            "y": 734,
+            "w": 61,
+            "h": 73
+          }
+        },
+        {
+          "index": 13,
+          "id": "rocks_13",
+          "name": "estalactite_ponta_04",
+          "rect": {
+            "x": 1081,
+            "y": 734,
+            "w": 72,
+            "h": 73
+          }
+        },
+        {
+          "index": 14,
+          "id": "rocks_14",
+          "name": "rocha_canto_01",
+          "rect": {
+            "x": 1166,
+            "y": 734,
+            "w": 61,
+            "h": 73
+          }
+        }
+      ]
+    },
+    {
+      "id": "lights_fire",
+      "name": "Lanternas, fogo e brasas",
+      "source_region": {
+        "y": 817,
+        "height": 94
+      },
+      "items": [
+        {
+          "index": 1,
+          "id": "lights_fire_01",
+          "name": "lanterna_01",
+          "rect": {
+            "x": 23,
+            "y": 817,
+            "w": 57,
+            "h": 94
+          }
+        },
+        {
+          "index": 2,
+          "id": "lights_fire_02",
+          "name": "lanterna_02",
+          "rect": {
+            "x": 90,
+            "y": 817,
+            "w": 68,
+            "h": 94
+          }
+        },
+        {
+          "index": 3,
+          "id": "lights_fire_03",
+          "name": "lanterna_03",
+          "rect": {
+            "x": 166,
+            "y": 817,
+            "w": 67,
+            "h": 94
+          }
+        },
+        {
+          "index": 4,
+          "id": "lights_fire_04",
+          "name": "fogo_pequeno_01",
+          "rect": {
+            "x": 241,
+            "y": 817,
+            "w": 59,
+            "h": 94
+          }
+        },
+        {
+          "index": 5,
+          "id": "lights_fire_05",
+          "name": "fogo_pequeno_02",
+          "rect": {
+            "x": 310,
+            "y": 817,
+            "w": 50,
+            "h": 94
+          }
+        },
+        {
+          "index": 6,
+          "id": "lights_fire_06",
+          "name": "fogo_pequeno_03",
+          "rect": {
+            "x": 370,
+            "y": 817,
+            "w": 46,
+            "h": 94
+          }
+        },
+        {
+          "index": 7,
+          "id": "lights_fire_07",
+          "name": "fogo_medio_01",
+          "rect": {
+            "x": 427,
+            "y": 817,
+            "w": 76,
+            "h": 94
+          }
+        },
+        {
+          "index": 8,
+          "id": "lights_fire_08",
+          "name": "fogo_grande_01",
+          "rect": {
+            "x": 512,
+            "y": 817,
+            "w": 86,
+            "h": 94
+          }
+        },
+        {
+          "index": 9,
+          "id": "lights_fire_09",
+          "name": "fogo_pequeno_04",
+          "rect": {
+            "x": 608,
+            "y": 817,
+            "w": 53,
+            "h": 94
+          }
+        },
+        {
+          "index": 10,
+          "id": "lights_fire_10",
+          "name": "fogo_pequeno_05",
+          "rect": {
+            "x": 670,
+            "y": 817,
+            "w": 58,
+            "h": 94
+          }
+        },
+        {
+          "index": 11,
+          "id": "lights_fire_11",
+          "name": "brasa_01",
+          "rect": {
+            "x": 738,
+            "y": 817,
+            "w": 60,
+            "h": 94
+          }
+        },
+        {
+          "index": 12,
+          "id": "lights_fire_12",
+          "name": "brasa_02",
+          "rect": {
+            "x": 808,
+            "y": 817,
+            "w": 56,
+            "h": 94
+          }
+        }
+      ]
+    }
+  ],
+  "particle_effects": [
+    {
+      "id": "embers_loose",
+      "name": "Brasas soltas",
+      "rect": {
+        "x": 865,
+        "y": 817,
+        "w": 359,
+        "h": 94
+      },
+      "usage": "particle_system",
+      "note": "Use sub-regions/recortes menores conforme o sistema de partículas; não são quadros delimitados por bordas."
+    }
+  ],
+  "preview_scene": {
+    "rect": {
+      "x": 23,
+      "y": 926,
+      "w": 1201,
+      "h": 295
+    },
+    "usage": "reference_only",
+    "contains": [
+      "caverna",
+      "vagoes",
+      "correntes",
+      "plataformas",
+      "lava",
+      "arquitetura"
+    ]
+  }
+}

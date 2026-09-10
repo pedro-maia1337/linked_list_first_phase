@@ -1,0 +1,254 @@
+{
+  "canvas": {
+    "width": 1672,
+    "height": 941,
+    "source": "caverna-gotica-pixelart.png"
+  },
+  "track": {
+    "type": "linear_path",
+    "orientation": "horizontal_zigzag",
+    "slotCount": 8,
+    "startX": 1440,
+    "endX": 180,
+    "note": "8 posicoes fixas (slots) distribuidas em SEQUENCIA LINEAR (nao fecha em circulo/elipse - formato compativel com jogo de plataforma). O eixo Y alterna entre duas alturas para criar saltos entre plataformas. Slot 0 fica junto ao boss (head da lista); slot 7 e o fim da lista (tail, next = null)."
+  },
+  "slots": [
+    {
+      "index": 0,
+      "x": 1440.0,
+      "y": 760.0,
+      "next": 1,
+      "prev": null
+    },
+    {
+      "index": 1,
+      "x": 1260.0,
+      "y": 680.0,
+      "next": 2,
+      "prev": 0
+    },
+    {
+      "index": 2,
+      "x": 1080.0,
+      "y": 780.0,
+      "next": 3,
+      "prev": 1
+    },
+    {
+      "index": 3,
+      "x": 900.0,
+      "y": 660.0,
+      "next": 4,
+      "prev": 2
+    },
+    {
+      "index": 4,
+      "x": 720.0,
+      "y": 780.0,
+      "next": 5,
+      "prev": 3
+    },
+    {
+      "index": 5,
+      "x": 540.0,
+      "y": 680.0,
+      "next": 6,
+      "prev": 4
+    },
+    {
+      "index": 6,
+      "x": 360.0,
+      "y": 780.0,
+      "next": 7,
+      "prev": 5
+    },
+    {
+      "index": 7,
+      "x": 180.0,
+      "y": 680.0,
+      "next": null,
+      "prev": 6
+    }
+  ],
+  "boss": {
+    "x": 1530,
+    "y": 760,
+    "anchor": "bottom_center",
+    "facing": "left"
+  },
+  "deathZone": {
+    "type": "horizontal_line",
+    "y": 900,
+    "note": "abaixo desta linha (ou fora dos limites horizontais), onPlayerDeath() e disparado"
+  },
+  "decorativeAnchors": {
+    "lanterns_existentes_no_background": [
+      {
+        "x": 245,
+        "y": 212
+      },
+      {
+        "x": 990,
+        "y": 148
+      },
+      {
+        "x": 1520,
+        "y": 300
+      },
+      {
+        "x": 120,
+        "y": 460
+      },
+      {
+        "x": 120,
+        "y": 545
+      },
+      {
+        "x": 215,
+        "y": 730
+      },
+      {
+        "x": 1590,
+        "y": 510
+      }
+    ]
+  },
+  "chainConnections": {
+    "attachHeightAboveGround": 40,
+    "note": "Reduzido de 90 para 40 apos feedback visual: o valor anterior posicionava o ponto de ancoragem ACIMA do topo real do vagao, fazendo a corrente formar um arco alto em vez de sair do lado do vagao. 40px aproxima o ponto de ancoragem da lateral/meio do vagao. Este valor AINDA E uma estimativa -- validar contra o vagao renderizado no jogo e ajustar se necessario (ver imagem de validacao gerada).",
+    "connections": [
+      {
+        "from": "boss",
+        "to": 0,
+        "fromAnchor": {
+          "x": 1530,
+          "y": 720
+        },
+        "toAnchor": {
+          "x": 1440.0,
+          "y": 720.0
+        },
+        "distance": 90.0
+      },
+      {
+        "from": 0,
+        "to": 1,
+        "fromAnchor": {
+          "x": 1440.0,
+          "y": 720.0
+        },
+        "toAnchor": {
+          "x": 1260.0,
+          "y": 640.0
+        },
+        "distance": 197.0
+      },
+      {
+        "from": 1,
+        "to": 2,
+        "fromAnchor": {
+          "x": 1260.0,
+          "y": 640.0
+        },
+        "toAnchor": {
+          "x": 1080.0,
+          "y": 740.0
+        },
+        "distance": 205.9
+      },
+      {
+        "from": 2,
+        "to": 3,
+        "fromAnchor": {
+          "x": 1080.0,
+          "y": 740.0
+        },
+        "toAnchor": {
+          "x": 900.0,
+          "y": 620.0
+        },
+        "distance": 216.3
+      },
+      {
+        "from": 3,
+        "to": 4,
+        "fromAnchor": {
+          "x": 900.0,
+          "y": 620.0
+        },
+        "toAnchor": {
+          "x": 720.0,
+          "y": 740.0
+        },
+        "distance": 216.3
+      },
+      {
+        "from": 4,
+        "to": 5,
+        "fromAnchor": {
+          "x": 720.0,
+          "y": 740.0
+        },
+        "toAnchor": {
+          "x": 540.0,
+          "y": 640.0
+        },
+        "distance": 205.9
+      },
+      {
+        "from": 5,
+        "to": 6,
+        "fromAnchor": {
+          "x": 540.0,
+          "y": 640.0
+        },
+        "toAnchor": {
+          "x": 360.0,
+          "y": 740.0
+        },
+        "distance": 205.9
+      },
+      {
+        "from": 6,
+        "to": 7,
+        "fromAnchor": {
+          "x": 360.0,
+          "y": 740.0
+        },
+        "toAnchor": {
+          "x": 180.0,
+          "y": 640.0
+        },
+        "distance": 205.9
+      }
+    ],
+    "endAnchorNote": "Modulo 13, tarefa 6: pecas decorativas que fecham as duas pontas do trilho. O vagao do slot 0 e o do ultimo slot visivel so tinham corrente ligando-os ao vizinho, o que os fazia parecer flutuando no vazio nas extremidades. Cada ancora e posicionada pela PONTA LIVRE da sua corrente (tip), nao pela placa: e a ponta que precisa encostar no que ela termina. NAO altera slots, next/prev nem a logica de lista encadeada.",
+    "endAnchors": [
+      {
+        "id": "boss_side",
+        "sprite": "right",
+        "tip": {
+          "x": 1566.0,
+          "y": 712.0
+        },
+        "chainToSlot": null,
+        "note": "Placa cravada na parede a direita do boss (x~1627). A PONTA da corrente fica em (1566,712), DENTRO da silhueta do boss (que naquela altura vai de x~1483 a x~1585), entao a corrente sai da placa, some atras do boss e reaparece como a corrente boss->slot 0 que ja existia. Primeira tentativa usou tip x=1588, 4px alem da borda do casaco: a peca ficava boiando ao lado do boss em vez de passar atras dele. Por isso nao precisa de ChainSegment proprio."
+      },
+      {
+        "id": "track_end",
+        "sprite": "left",
+        "tip": {
+          "x": 110.0,
+          "y": 660.0
+        },
+        "chainToSlot": 7,
+        "toAnchor": {
+          "x": 180.0,
+          "y": 640.0
+        },
+        "distance": 72.8,
+        "note": "Placa cravada na rocha a esquerda do slot 7 (fim da lista). O ChainSegment daqui ate o ponto de engate do slot 7 espelha o estado daquele vagao como qualquer outro segmento, entao a corrente arrebenta junto se o vagao 7 cair."
+      }
+    ]
+  }
+}
