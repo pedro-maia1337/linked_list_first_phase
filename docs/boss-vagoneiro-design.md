@@ -16,6 +16,7 @@
 - ✅ **Módulo 10 — Harmonização de escala.** Calibração numérica da altura relativa entre player, vagão e boss (antes só havia descrição qualitativa "boss deve parecer maior"), com recálculo de colliders/ancoragem a partir do bounding box real de cada asset. Ver seção 2.3.
 - ✅ **Módulo 13 — Integração da cena.** Vagões e Boss estavam lidos como adesivos sobre o parallax: nenhuma luz do fundo os afetava e o Boss carregava um contorno dourado uniforme. Entregue: sombra de contato ancorada na base visível do vagão, tonalidade fria compartilhada sobre vagões/Boss/correntes, glow quente nos vagões próximos de lanternas, rim light do Boss corrigido de contorno para luz direcional, troca dos assets de vagão pelo set regenerado de 15 frames (com registro por frame), e âncoras de parede fechando as duas pontas do trilho. Ver seção 13.
 - ✅ **Módulo 14 — Doca do Boss, arte caricata e combate jogável.** Três frentes: (1) o Boss ganhou uma peça de cenário própria (`boss/doca.png`) com sombra de contato e tonalidade fria, encerrando a leitura de "colado no fundo" que o Módulo 13 já tinha resolvido para os vagões; (2) o `sprite.png` humanoide sombrio foi substituído pelo maquinista caricato (grade 6x4 de 300px agora, mapeamento de estados da seção 4.1 preservado célula a célula); (3) a fase virou jogável de verdade — HP e fases do Boss, janela `exposed`/invulnerabilidade, os seis ataques da lista encadeada e o HUD de operação em execução. Ver seção 14.
+- ✅ **Módulo 15 — Upgrade do Player.** Quatro frentes: (1) `idle` real substituindo o congelamento do frame 0 de `walk`, e o pulo separado em `jumpRise`/`jumpFall`/`doubleJump`, com as folhas `west`/`east` novas carregadas e a calibração de 110px refeita contra a arte regenerada (referência passou a ser `idle` frame 0, com normalização de escala por folha); (2) dash em botão próprio (`C`), 2.1x a altura do player, cooldown de 0.6s, cancelável por parede/queda, com rastro; (3) duplo salto com animação granular, burst nos pés e queda 1.2x mais pesada sem mexer no ápice de ≈145px; (4) combo de espada de 2 golpes em `J` com hitbox real só nos frames de pico, arco de corte e dano pelo mesmo `boss.takeDamage()`. `north`/`south` saíram do projeto. Corrigido também o sinal do offset do pé do player. Ver seção 15.
 - ✅ **Módulo 9 — Polish visual e juice.** Parallax de fundo (`layer-far.png`/`layer-mid.png`), iluminação funcional (lanternas, olhos do boss), sombra de contato, partículas de feedback (poeira, faísca, fumaça) e câmera com easing. Ver seção 12.
 
 ---
@@ -27,7 +28,7 @@ Este documento descreve a mecânica completa do boss "O Vagoneiro" para fins de 
 - [x] Entidade do Boss (o Vagoneiro), controlando os vagões (spawn, movimentação, remoção) via **slots fixos** em um trilho **linear** (ver seção 3).
 - [x] Entidade dos Vagões com máquina de estados completa e função de **plataforma sólida** (ver seção 9).
 - [x] Animações do Boss — `idle` ativo continuamente; `hit`/`stunned`/`exposed`/`recovering` implementados e disparáveis isoladamente via debug, sem lógica de combate real (ver seção 4.1).
-- [x] Movimentação do Player com asset de 4 direções, congelando num frame estático quando parado (ver seção 4.2).
+- [x] Movimentação do Player (câmera estritamente lateral, `west`/`east`) com `idle` real, dash, pulo granular e ataque com espada (ver seções 4.2 e 15).
 - [x] Morte do Player por queda/erro de plataforma (ver seção 10).
 - [x] Escala relativa entre player, vagão e boss calibrada numericamente (ver seção 2.3).
 - [x] Polish visual e juice de gameplay — parallax, iluminação, sombra de contato, partículas de feedback, câmera com easing (ver seção 12).
@@ -121,10 +122,20 @@ Mapeamento validado célula a célula no spritesheet (**1800x1200, grade 6x4, c�
 
 ### 4.2 Animações do Player
 
-- **Asset:** `west.png`/`east.png`/`north.png`/`south.png` (Módulo 8) — 2048x256, 8 frames de 256x256 cada, resolução uniforme entre as 4 direções.
-- **Movimentação ativa:** apenas `west` (esquerda) e `east` (direita) são acionadas pela movimentação horizontal real. `north`/`south` estão carregadas e testáveis via debug (`player.debugPlayWalkNorth()`/`debugPlayWalkSouth()`, preview apenas), sem mecânica de movimento vertical.
-- **Player parado:** a animação de `walk` **congela num frame estático** (frame 0, na última direção olhada) sempre que a velocidade horizontal é zero — inclusive no ápice de um pulo sem movimento lateral. Isso não é uma animação de `idle` de verdade (não existe asset dedicado para isso, ver abaixo); é apenas o congelamento do ciclo de caminhada.
-- `idle` (de verdade, com asset próprio), `hit`/`damaged`, `pulled` — **fora de escopo por enquanto**, nomes reservados no enum (`PlayerState`) para uso futuro.
+> Atualizado no Módulo 15 (seção 15). O jogo é **estritamente lateral**: só existe a orientação `west`/`east`, sem asset, estado ou tecla de debug para outras direções.
+
+| Estado (`PlayerState`) | Folha (`west`/`east`) | Frames | Gatilho |
+|---|---|---|---|
+| `idle` | `idle_*.png` | 6 (loop) | no chão, sem input horizontal |
+| `walk` | `west.png`/`east.png` | 8 (loop) | no chão, com input horizontal |
+| `dash` | `dash_*.png` | 6 | durante o dash |
+| `jumpRise` | `jump_rise_*.png` | 4 (segura o último) | no ar, subindo |
+| `jumpFall` | `jump_fall_*.png` | 4 (loop) | no ar, após o ápice |
+| `doubleJump` | `double_jump_*.png` | 6 (0.51s) | ativação do segundo pulo |
+| `attack1` / `attack2` | `attack1_*.png` / `attack2_*.png` | 6 cada | combo de espada (`J`) |
+
+- A direção olhada acompanha o input horizontal no chão **e no ar** (e no início de um dash). Trocar de lado no meio do pulo preserva o frame da animação em curso. Ver seção 15.7.
+- `hit`, `damaged`, `pulled`, `attackAir`, `death` — nomes reservados no enum, **sem asset e sem lógica**.
 
 ### 4.3 Animações dos Vagões
 
@@ -217,10 +228,23 @@ assets/
                                        # — fumaça saindo do boss, opcional (Módulo 9)
   player/
     spritesheets/
-      west.png                        # 2048x256, 8 frames de 256x256 — andando p/ esquerda
-      east.png                        # 2048x256, 8 frames de 256x256 — andando p/ direita
-      north.png                       # 2048x256, 8 frames de 256x256 — reservado (sem uso ativo)
-      south.png                       # 2048x256, 8 frames de 256x256 — reservado (sem uso ativo)
+                                       # todas com 256px de altura, 1 linha, células 256x256,
+                                       # pé na linha 199 (padding inferior de 56px) — Módulo 15
+      west.png / east.png             # 2048x256, 8 frames — walk
+      idle_west.png / idle_east.png   # 1536x256, 6 frames — idle (referência de escala)
+      dash_west.png / dash_east.png   # 1536x256, 6 frames
+      jump_rise_west/east.png         # 1024x256, 4 frames
+      jump_fall_west/east.png         # 1024x256, 4 frames
+      double_jump_west/east.png       # 1536x256, 6 frames
+      attack1_west/east.png           # 1536x256, 6 frames — corte horizontal (pico: frames 3-4)
+      attack2_west/east.png           # 1536x256, 6 frames — diagonal de finalização (pico: frame 4)
+    effects/
+      particles/
+        dash-trail-west/east.png      # 384x32, 6 frames de 64x32 — rastro do dash
+        double-jump-east.png          # 576x96, 6 frames de 96x96 — burst do 2º pulo (simétrico,
+        double-jump-west.png          #   usado nas duas direções; o gêmeo -west não é usado)
+        sword-slash-arc.png           # 768x384, 4x2 de 192x192 — arco (west); linha 1 = golpe 1,
+        sword-slash-arc-east.png      #   linha 2 = golpe 2; variante east
   ui/
     buttons/                          # (vazio) — sem UI/HUD nesta etapa
   wagons/
@@ -572,3 +596,107 @@ Os seis ataques, na adaptação linear (nenhuma geometria circular foi reintrodu
 - [x] Ciclo Corrompido demonstrando Floyd automaticamente.
 - [x] HP/fases, janela `exposed`/invulnerabilidade e HUD de operação em execução.
 - [x] Nenhum critério das seções 11, 12 e 13 regrediu.
+
+---
+
+## 15. Módulo 15 — Upgrade do Player (concluído)
+
+Quatro frentes sobre o Player já existente, **sem tocar na lógica interna do Boss** (HP/fases, janela `exposed`, ataques, HUD). O único ponto novo de contato com o combate é um caminho válido de dano — o golpe de espada — que termina no mesmo `AttackDirector.resolvePlayerAttack()` → `boss.takeDamage()` de antes.
+
+Código novo em `lib/game/player/`: `player_animations.dart` (enum de estados + tabela de folhas, sem Flame), `dash_controller.dart` e `attack_controller.dart` (lógica pura, testável sem subir o jogo), `player_fx.dart` (efeitos pré-carregados), `sword_hitbox.dart` e `arena_wall.dart`.
+
+### 15.1 Assets e estado de animação (Frente 1)
+
+**A calibração da seção 2.3 teve de ser refeita, não só preservada.** Os `west.png`/`east.png` no disco foram regenerados junto com as folhas novas: o personagem ocupa 87px da célula de 256px (as constantes do Módulo 11 registravam 230px e padding de 9px). Mantidas as regras — 110px na tela, pé na base do bbox real — os números passam a ser:
+
+| | Antes (Módulo 11) | Agora |
+|---|---|---|
+| Frame de referência | `walk` frame 0 | **`idle` frame 0** (a pose de repouso real) |
+| Altura opaca nativa | 230px | **92px** (linhas 108..199) |
+| Padding sob o pé | 9px | **56px** (pé na linha 199 em **todas** as folhas) |
+| `playerDisplayScale` | 110/230 | **110/92** = 1.1957 |
+| Altura renderizada | 110px | **110px** |
+
+**Normalização por folha (`PlayerSheetSpec.artScale`).** As folhas compartilham célula e linha de base, mas **não** a escala de desenho — `jump_rise` desenha o personagem ~1.6x maior que `idle`. Renderizar tudo numa escala só faria o player "crescer" ao pular. Cada folha é dividida pelo próprio fator:
+
+| Folha | `artScale` | Como foi medido |
+|---|---|---|
+| idle | 1.00 | referência |
+| walk | 87/92 = 0.946 | razão das alturas opacas das poses em pé |
+| dash | 1.10 | área de pele do rosto (única região com esse tom, escala com o quadrado do tamanho) + conferência visual da largura do capuz |
+| jump_rise | 1.56 | idem |
+| jump_fall | 1.17 | idem |
+| double_jump | 1.23 | idem |
+| attack1 | 1.10 | idem |
+| attack2 | 1.16 | idem |
+
+Nas folhas sem pose em pé, os valores são estimativas medidas (±5%), revisáveis em playtest — um número por folha, na tabela.
+
+**Correção do offset do pé.** `playerVisualYOffset` tinha o sinal trocado desde o Módulo 11: com âncora `bottomCenter`, a borda inferior do frame fica em `position.y` e o pé visível fica `pad × scale` **acima** dela, então a arte precisa **descer** esse valor. O valor negativo subia a arte e deixava o pé `2 × pad × scale` acima do vagão — ~8px com o padding antigo (passou despercebido), ~134px com o novo. O offset agora é recalculado a cada troca de folha e durante o squash (`_applyVisualScale`), sempre sobre a escala atual.
+
+**Idle real.** O congelamento do frame 0 de `walk` foi removido (há teste que falha se `paused = true`/`currentIndex = 0` voltarem ao `player.dart`). Um único `SpriteAnimationComponent` troca de animação conforme o estado; a pose avulsa `jump-double.png` e o `_DoubleJumpVisual` (que apontavam para um arquivo inexistente) saíram.
+
+**Prioridade de resolução do estado** (a cada frame, depois da física): ataque → dash → `doubleJump` (enquanto a animação de 0.51s roda) → no ar: `jumpRise` se `vy < 0`, senão `jumpFall` → no chão: `walk` ou `idle`.
+
+### 15.2 Dash (Frente 2)
+
+- **Binding:** `C` (botão próprio). O duplo toque direcional foi descartado porque qualquer correção rápida esquerda-direita viraria dash. Direção = input horizontal segurado, ou a direção olhada.
+- **Parâmetros** (`dash_controller.dart`): distância 2.1 × 110 = **231px**, duração nominal **0.15s**, cooldown de **0.6s** a partir do início. Sem stamina/mana.
+- **Por distância, não por tempo:** cada frame anda no máximo 32px (`playerDashMaxStep`); um frame longo só atrasa o dash, nunca o encurta nem atravessa uma parede de 80px.
+- **Sem input vertical:** pulo, ataque e movimento são ignorados durante o dash.
+- **No chão × no ar.** Um dash iniciado no chão é cancelado ao perder o piso (`lostGround`), e a gravidade assume. Um dash iniciado no ar é puramente horizontal — a gravidade fica suspensa durante ele. *Decisão:* as plataformas desta arena têm 55px de largura, então um dash só no chão seria cancelado em ~50px e não teria uso.
+- **Parede:** a arena não tinha paredes; `ArenaWall` fecha as duas bordas horizontais (fora do canvas, 80px de espessura). A colisão empurra o player para fora e cancela o dash (`wall`).
+- **Rastro:** um `dash-trail-west/east.png` (conforme a direção) a cada 0.03s, 30px atrás e 45px acima do pé.
+- **Reservado:** `playerDashGrantsInvulnerability = false` e `Player.isDashInvulnerable` (sempre `false`), sem lógica.
+
+### 15.3 Duplo salto (Frente 3)
+
+- A física do Módulo 11/Mudança 3 fica intocada na subida (g = 1160, v0 = −580 → ápice de **145px**). Na queda, a gravidade é multiplicada por **1.2** (`playerGravityFor`): leitura de peso mais clara, mesmo ápice, mesma altura alcançável. O pior degrau da arena (+120px em 180px) continua alcançável — há teste que simula o arco.
+- O burst usa `double-jump-east.png` para as duas direções (efeito simétrico), com o centro do anel (48, 65 nativos) ancorado nos pés no momento da ativação, como irmão no mundo (fica onde o pulo aconteceu).
+- **Reservados:** `playerCoyoteTime` e `playerJumpBufferTime` (= 0, nada os lê).
+
+### 15.4 Ataque com espada (Frente 4)
+
+- **`J`** deixou de ser atalho de debug: o `onKeyEvent` não resolve mais nada; o player lê `J` como tecla segurada (borda de subida) e inicia um golpe. Quem decide se o Boss é atingido é a hitbox.
+- **`AttackController`** (separado da física): o golpe 2 só encadeia até **0.35s** depois de o golpe 1 terminar, ou com a tecla apertada durante a recuperação do golpe 1 (a partir do pico); fora disso, volta ao golpe 1; depois do golpe 2, também volta ao golpe 1. Só no chão — no ar a entrada é ignorada (`attackAir` reservado). Durante o golpe, movimento/pulo/dash ficam travados; perder o piso cancela o golpe.
+- **Hitbox real** (`SwordHitbox`, entidade própria, não o collider do pé): retângulo de **154px** (1.4 × 110) à frente × 90px a partir do pé, `inactive` fora dos frames de pico — **frames 3-4 do golpe 1, frame 4 do golpe 2** (contando a partir de 1). No máximo um acerto por alvo por golpe.
+- **Arco de corte:** `sword-slash-arc.png` (west) / `sword-slash-arc-east.png`, linha 1 para o golpe 1 e linha 2 para o golpe 2, como filho do player, surgindo no primeiro frame de pico. É posicionado pelo centro do conteúdo desenhado de cada linha (não pelo centro da célula), na altura da lâmina.
+- **Dano:** `Player.onSwordContact` → a arena filtra `VagoneiroBoss` → `attackDirector.resolvePlayerAttack()` → `boss.takeDamage(playerAttackDamage)` (= 1). Fora da janela `exposed`, o golpe conecta e dá `missInvulnerable`, exatamente como antes. `resolvePlayerAttack` só deixou de chamar a antiga `playAttackSwing()` (removida — a animação agora é do `AttackController`).
+
+### 15.5 Teclas
+
+| Tecla | Antes | Agora |
+|---|---|---|
+| `J` | dano direto (debug) | golpe de espada real |
+| `C` | — | dash |
+| `N` / `S` | preview de direções verticais | removidas |
+| `H`, `X`, `K`, `P`, `R`, `M`, `L`, `0-7` | — | inalteradas |
+
+### 15.6 Como isto foi validado
+
+- **`test/player_upgrade_test.dart`** (31 testes): grade e contagem de frames de cada folha e de cada efeito, medidas no PNG; linha de base do pé em todas as folhas; constantes de calibração re-medidas no `idle` frame 0; nenhuma direção vertical em assets, enum ou código; fim do congelamento, com `idle` animando na escala exata; dash com distância exata (inclusive com frame longo), cooldown, cancelamento por parede e por queda, sem movimento vertical e com rastro; ápice ≈145px (simulado e em jogo) e alcance do pior degrau; sequência `jumpRise → jumpFall → doubleJump → jumpFall → idle` com burst nos pés; hitbox ativa só nos frames de pico; combo dentro e fora da janela; dano via `J` real chegando a `boss.takeDamage()` só com `isExposed`; `H`/`X`/`P`/`K` como antes.
+- **`test/wagon_and_player_fx_test.dart`:** a pré-condição do teste de squash foi ajustada — o player nasce no ar, agora em `jumpFall` (com a escala da própria folha); a asserção final, de voltar **exatamente** a `playerDisplayScale` em repouso, ficou intacta.
+- **`test/boss_combat_test.dart`:** sem alterações; passa inteiro.
+- Conferido em render headless: `idle` apoiado no vagão, arco sobre a lâmina, `jump_rise`/`jump_fall` no mesmo tamanho do `idle`, burst no ponto de ativação, rastro atrás do dash.
+
+### Critérios de aceite
+
+- [x] Player possui `idle` real (asset próprio), substituindo o congelamento de frame de `walk`.
+- [x] `west`/`east` (walk) e as folhas `idle`, `dash`, `jump_rise`, `jump_fall`, `double_jump`, `attack1`, `attack2` (`west`/`east`) carregadas e integradas; o jogo é estritamente lateral.
+- [x] Dash com distância e cooldown parametrizáveis, sem input vertical, cancelável por colisão, com rastro.
+- [x] Duplo salto com animação granular e burst no segundo impulso, com o ápice de ≈145px inalterado.
+- [x] Espada: combo de 2 golpes, hitbox só nos frames de pico, arco de corte, dano via `boss.takeDamage()` respeitando `isExposed`.
+- [x] `J` dispara o ataque real.
+- [x] Sem regressão na calibração (110px, ápice ≈145px, pé na base do bbox real — agora com o offset corrigido) nem no combate do Vagoneiro.
+- [x] Assets com fundo transparente e grade uniforme (verificado por teste). O player continua **sem** a tonalidade fria aplicada (como antes deste módulo); as folhas novas não exigem nada para recebê-la.
+- [x] `hit`/`damaged`/`pulled`/`attackAir`/`death` reservados no enum, sem asset.
+
+### 15.7 Correção — troca de direção no ar
+
+Sintoma: ao pular e inverter a direção horizontal no ar, o personagem parecia continuar no sentido anterior por um tempo antes de responder; no chão a troca era imediata. Causa: o deslocamento horizontal já mudava no mesmo frame, mas a direção olhada (`_setFacing`) só era atualizada com o player no chão — a arte ficava virada para o lado antigo até a aterrissagem, o que se lia como atraso. Correção: a direção passa a acompanhar o input também no ar; numa troca só de direção, o ticker da folha nova herda `currentIndex`/`clock`/`elapsed` da anterior (as folhas `west`/`east` têm o mesmo timing), para a virada não reiniciar `jumpRise`/`doubleJump`. Física, velocidade e alcance do pulo não mudaram. Teste: `player_upgrade_test.dart` → *reversing mid-air turns and moves on the same frame*.
+
+### Pendências conhecidas
+
+- O `artScale` das folhas sem pose em pé é uma estimativa medida (±5%) — revisar em playtest.
+- `double-jump-west.png` existe, mas não é usado (o burst é simétrico).
+- `test/widget_test.dart` de template continua falhando (pendência da seção 13).

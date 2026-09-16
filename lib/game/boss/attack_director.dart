@@ -435,14 +435,16 @@ class AttackDirector extends Component {
   /// Resolves one player attack: the boss takes damage **only** inside his
   /// exposed window, and is invulnerable outside it.
   ///
+  /// Módulo 15: called when the sword's live hitbox touches the boss (see
+  /// `Player.onSwordContact`), no longer straight from the `J` key. The
+  /// swing animation belongs to the player's `AttackController`.
+  ///
   /// With the orphan node and the cycle window gone, this is the whole
   /// rule set — the two special cases that used to sit in front of it went
   /// with the attacks that created them.
   AttackOutcome resolvePlayerAttack() {
-    player.playAttackSwing();
-
     if (boss.isExposed) {
-      boss.takeDamage(1);
+      boss.takeDamage(playerAttackDamage);
       _spawnFlash(
         CombatFlash.hit(Vector2(boss.position.x, boss.visibleFootY - 80)),
       );

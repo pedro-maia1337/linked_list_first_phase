@@ -25,6 +25,7 @@ import 'fx/parallax_backdrop.dart';
 import 'fx/sprite_burst.dart';
 import 'fx/wagon_fx_observer.dart';
 import 'hud/combat_hud.dart';
+import 'player/arena_wall.dart';
 import 'player/player.dart';
 import 'track/linear_track.dart';
 import 'wagon/chain_anchor.dart';
@@ -96,6 +97,13 @@ class VagoneiroArenaGame extends FlameGame
   /// path.
   void debugHoldJumpForTest(bool held) {
     _pressedKeys = held ? {LogicalKeyboardKey.space} : <LogicalKeyboardKey>{};
+  }
+
+  /// Test/debug hook: replaces the whole held-key set, for inputs other
+  /// than the jump (dash `C`, attack `J`, directions). Same set the real
+  /// key handler writes.
+  void debugSetPressedKeysForTest(Set<LogicalKeyboardKey> keys) {
+    _pressedKeys = Set.of(keys);
   }
 
   @override
@@ -203,8 +211,21 @@ class VagoneiroArenaGame extends FlameGame
             .showOperation('-1 HP ($reason) — maquinista $hp/$playerMaxHp');
         _checkPlayerDefeat();
       },
+      // Módulo 15, Frente 4: the sword's live hitbox touched something.
+      // Only the boss is a valid target, and the hit is resolved by the
+      // same `resolvePlayerAttack` -> `boss.takeDamage()` path as before —
+      // no second damage route exists.
+      onSwordContact: (target) {
+        if (target is VagoneiroBoss) {
+          attackDirector.resolvePlayerAttack();
+        }
+      },
     );
     world.add(player);
+
+    // Módulo 15, Frente 2: solid walls just outside both horizontal edges
+    // of the arena, so a dash has something to be cancelled by.
+    await _addArenaWalls();
 
     // Módulo 12, item 5: eased horizontal follow, clamped to the arena, and
     // the owner of the screen shake. Added to the game (not the world) so
@@ -273,6 +294,22 @@ class VagoneiroArenaGame extends FlameGame
     camera.viewport.add(DebugHelpOverlay(position: Vector2(16, 16)));
 
     _logLoadedArenaConfig();
+  }
+
+  Future<void> _addArenaWalls() async {
+    const thickness = 80.0;
+    final height = arenaConfig.canvas.height;
+    await world.add(
+      ArenaWall(left: -thickness, top: 0, height: height, thickness: thickness),
+    );
+    await world.add(
+      ArenaWall(
+        left: arenaConfig.canvas.width,
+        top: 0,
+        height: height,
+        thickness: thickness,
+      ),
+    );
   }
 
   /// DEBUG-ONLY / TEMPORÁRIO: occupies all 8 slots at once purely so a
@@ -564,17 +601,6 @@ class VagoneiroArenaGame extends FlameGame
       return KeyEventResult.handled;
     }
 
-    // Debug-only isolated player animation preview (module task item 6):
-    // N = walkNorth, S = walkSouth. Visual-only, no vertical movement.
-    if (event.logicalKey == LogicalKeyboardKey.keyN) {
-      player.debugPlayWalkNorth();
-      return KeyEventResult.handled;
-    }
-    if (event.logicalKey == LogicalKeyboardKey.keyS) {
-      player.debugPlayWalkSouth();
-      return KeyEventResult.handled;
-    }
-
     // Debug-only manual reset: reuses the real onPlayerDeath() hook
     // (Módulo 5), not a separate reset code path.
     if (event.logicalKey == LogicalKeyboardKey.keyR) {
@@ -582,11 +608,12 @@ class VagoneiroArenaGame extends FlameGame
       return KeyEventResult.handled;
     }
 
-    // Módulo 14 — the player's attack. One key, one resolution: the rules
-    // for what it hits (orphan / cycle entry / exposed boss / nothing) all
-    // live in `AttackDirector.resolvePlayerAttack`.
-    if (event.logicalKey == LogicalKeyboardKey.keyJ) {
-      attackDirector.resolvePlayerAttack();
+    // Módulo 15: `J` (attack) and `C` (dash) are no longer handled here.
+    // They are held-key inputs the player polls from [_pressedKeys], like
+    // movement and jump — `J` now starts a real swing whose hitbox, not
+    // the key, decides whether the boss is hit.
+    if (playerAttackKeys.contains(event.logicalKey) ||
+        playerDashKeys.contains(event.logicalKey)) {
       return KeyEventResult.handled;
     }
 

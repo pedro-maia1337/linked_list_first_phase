@@ -67,6 +67,7 @@ flutter:
     - assets/wagons/spritesheets/
     - assets/wagons/decorative/
     - assets/player/spritesheets/
+    - assets/player/effects/particles/
     - docs/slots_config.json
 
   # To add assets to your application, add an assets section, like this:

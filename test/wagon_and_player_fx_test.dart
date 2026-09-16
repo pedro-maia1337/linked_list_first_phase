@@ -172,7 +172,14 @@ void main() {
     final visual = game.player.children.whereType<SpriteAnimationComponent>()
         .first;
     final baseScale = Vector2.all(playerDisplayScale);
-    expect(visual.scale, baseScale, reason: 'resting scale must be the Módulo 11 value');
+    // Módulo 15: the player boots in the air, so the sheet on screen is
+    // jump_fall, drawn at its own art-scale-normalised size. The resting
+    // (idle) scale is asserted at the end, once it has landed.
+    expect(game.player.state, PlayerState.jumpFall);
+    expect(
+      visual.scale,
+      Vector2.all(playerDisplayScale / playerJumpFallSheet.artScale),
+    );
 
     // The player starts above slot 0 and falls onto it — run until it lands.
     var sawDeformation = false;

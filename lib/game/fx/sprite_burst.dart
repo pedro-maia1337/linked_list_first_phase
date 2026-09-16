@@ -74,7 +74,7 @@ class SpriteBurst extends SpriteAnimationComponent {
   }
 
   /// Landing dust, anchored at the player's own foot point — the exact
-  /// position `Player.position` holds (bottom-center anchor, art shifted up
+  /// position `Player.position` holds (bottom-center anchor, art shifted
   /// by `playerVisualYOffset` so that point is the visible foot). Nothing
   /// here re-derives that anchor.
   static Future<SpriteBurst> dustPoof(Vector2 footPosition) async {

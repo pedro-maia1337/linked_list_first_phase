@@ -71,6 +71,10 @@ const int bossMaxHp = 12;
 /// forgives".
 const int playerMaxHp = 5;
 
+/// Damage of one sword swing on the boss (Módulo 15). Same 1 as every
+/// other damage source until a balancing decision says otherwise.
+const int playerAttackDamage = 1;
+
 /// Damage for standing on the wagon `RemoverNo` drops, charged the instant
 /// the floor stops being solid (`Player.onSupportLost`). This is the
 /// pre-existing fall hook, not a new hitbox — Mudança 1 (a) is explicit
