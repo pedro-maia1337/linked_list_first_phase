@@ -1,4 +1,4 @@
-# DataQuest: Codex das Estruturas
+# FightCodex: Codex das Estruturas
 
 Jogo Flutter + Flame em que cada fase ensina uma estrutura de dados (lista encadeada, pilha, fila, árvore, tabela hash, grafo…), com bioma e boss próprios, acessíveis a partir de um hub central ("O Repositório").
 
