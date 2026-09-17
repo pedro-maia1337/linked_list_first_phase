@@ -1,7 +1,7 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
-import 'game/vagoneiro_arena_game.dart';
+import 'phases/phase_registry.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,11 +12,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // There is no hub yet ("O Repositório"), so the app opens the first
+    // registered phase directly — the same game it always opened.
+    final phase = phaseRegistry.first;
     return MaterialApp(
-      title: 'O Vagoneiro',
+      title: phase.bossName,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: GameWidget(game: VagoneiroArenaGame()),
+        body: GameWidget(game: phase.createGame()),
       ),
     );
   }

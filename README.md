@@ -1,17 +1,32 @@
-# linked_list_first_phase
+# DataQuest: Codex das Estruturas
 
-A new Flutter project.
+Jogo Flutter + Flame em que cada fase ensina uma estrutura de dados (lista encadeada, pilha, fila, árvore, tabela hash, grafo…), com bioma e boss próprios, acessíveis a partir de um hub central ("O Repositório").
 
-## Getting Started
+Fases implementadas:
 
-This project is a starting point for a Flutter application.
+| id | Estrutura | Boss |
+|---|---|---|
+| `linked_list` | Lista Encadeada | O Vagoneiro |
 
-A few resources to get you started if this is your first Flutter project:
+## Estrutura
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+- `lib/shared/` e `assets/shared/`: o que vale para todas as fases (Player, HUD, efeitos, física, debug, contrato de fase).
+- `lib/phases/<id>/` e `assets/phases/<id>/`: o que é de uma fase só.
+- `lib/phases/phase_registry.dart`: lista de fases.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Guia completo, incluindo o passo a passo para adicionar uma fase: **[docs/ESTRUTURA.md](docs/ESTRUTURA.md)**.
+Design da fase 1: [docs/phases/linked_list/boss-vagoneiro-design.md](docs/phases/linked_list/boss-vagoneiro-design.md).
+
+## Rodando
+
+```
+flutter pub get
+flutter run -d windows        # abre a primeira fase do registro
+flutter test                  # suíte completa (test/shared + test/phases/<id>)
+```
+
+Render sem janela da fase 1:
+
+```
+flutter test test/phases/linked_list/scene_snapshot_tool.dart --dart-define=SNAPSHOT_OUT=<arquivo.png>
+```

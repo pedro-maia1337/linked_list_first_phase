@@ -59,16 +59,20 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/background/
-    - assets/effects/
-    - assets/effects/particles/
-    - assets/boss/
-    - assets/wagons/states/
-    - assets/wagons/spritesheets/
-    - assets/wagons/decorative/
-    - assets/player/spritesheets/
-    - assets/player/effects/particles/
-    - docs/slots_config.json
+    # Shared by every phase (player, generic fx).
+    - assets/shared/effects/
+    - assets/shared/effects/particles/
+    - assets/shared/player/spritesheets/
+    - assets/shared/player/effects/particles/
+    # Phase: linked_list (Boss Vagoneiro). Each new phase adds its own block.
+    - assets/phases/linked_list/background/
+    - assets/phases/linked_list/boss/
+    - assets/phases/linked_list/effects/
+    - assets/phases/linked_list/effects/particles/
+    - assets/phases/linked_list/wagons/states/
+    - assets/phases/linked_list/wagons/spritesheets/
+    - assets/phases/linked_list/wagons/decorative/
+    - assets/phases/linked_list/level/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
